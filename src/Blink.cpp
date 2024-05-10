@@ -22,22 +22,39 @@ void setup() {
     pinMode(SENSOR, INPUT);
     pinMode(LEADSOFF_M_PIN, INPUT);
     pinMode(LEADSOFF_P_PIN, INPUT);
-    Serial.begin(9600);
+    Serial.begin(115200);
 }
 
 void loop() {
     static long counter = 0;
-    counter++;
+    static long skipped = 0;
 
-    float sensor = analogRead(SENSOR);
-    dtostrf(sensor, 4, 2, str_sensor);
+    static unsigned long lastRead = 0;
+    unsigned long currentMillis = millis();
 
-    int loMinuValue = digitalRead(LEADSOFF_M_PIN);
-    int loPlusValue = digitalRead(LEADSOFF_P_PIN);
+    if (currentMillis - lastRead >= 4) {
+        lastRead = currentMillis;
+        counter++;
 
-    printf("all %d %d %s %d\n", loMinuValue, loPlusValue, str_sensor, counter);
-    printf(">ecg:%s\n", str_sensor);
-    printf(">lo+:%d\n", loPlusValue);
-    printf(">lo-:%d\n", loMinuValue);
-    delay(1);
+        float sensor = analogRead(SENSOR);
+        dtostrf(sensor, 4, 2, str_sensor);
+
+        int loMinuValue = digitalRead(LEADSOFF_M_PIN);
+        int loPlusValue = digitalRead(LEADSOFF_P_PIN);
+
+
+        printf("all %d %d %s %ld %ld\n"
+               ">ecg:%s\n"
+               ">lo+:%d\n"
+               ">lo-:%d\n",
+               loMinuValue, loPlusValue, str_sensor, counter, skipped,
+               str_sensor,
+               loPlusValue,
+               loMinuValue);
+//        printf(">ecg:%s\n", str_sensor);
+//        printf(">lo+:%d\n", loPlusValue);
+//        printf(">lo-:%d\n", loMinuValue);
+    } else {
+        skipped++;
+    }
 }
