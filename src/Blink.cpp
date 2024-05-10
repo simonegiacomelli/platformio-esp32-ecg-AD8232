@@ -35,6 +35,9 @@ void loop() {
     int loMinuValue = digitalRead(LEADSOFF_M_PIN);
     int loPlusValue = digitalRead(LEADSOFF_P_PIN);
 
-    printf("%d %d %s %d\n", loMinuValue, loPlusValue, str_sensor, counter);
-
+    printf("all %d %d %s %d\n", loMinuValue, loPlusValue, str_sensor, counter);
+    printf(">ecg:%s\n", str_sensor);
+    printf(">lo+:%d\n", loPlusValue);
+    printf(">lo-:%d\n", loMinuValue);
+    delay(1);
 }
