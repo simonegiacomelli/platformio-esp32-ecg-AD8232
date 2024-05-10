@@ -12,17 +12,17 @@
 // #endif
 
 #define SENSOR A0
-#define SD2_PIN 9
-#define SD3_PIN 10
+#define LEADSOFF_M_PIN 10
+#define LEADSOFF_P_PIN 9
 
 char str_sensor[10];
 
 void setup() {
     pinMode(LED_BUILTIN, OUTPUT);
     pinMode(SENSOR, INPUT);
-    pinMode(SD2_PIN, INPUT);
-    pinMode(SD3_PIN, INPUT);
-    Serial.begin(115200);
+    pinMode(LEADSOFF_M_PIN, INPUT);
+    pinMode(LEADSOFF_P_PIN, INPUT);
+    Serial.begin(9600);
 }
 
 void loop() {
@@ -32,8 +32,9 @@ void loop() {
     float sensor = analogRead(SENSOR);
     dtostrf(sensor, 4, 2, str_sensor);
 
-    int sd2Value = digitalRead(SD2_PIN);
-    int sd3Value = digitalRead(SD3_PIN);
+    int loMinuValue = digitalRead(LEADSOFF_M_PIN);
+    int loPlusValue = digitalRead(LEADSOFF_P_PIN);
 
-    printf("%d %d %s %d\n", sd2Value, sd3Value, str_sensor, counter);
+    printf("%d %d %s %d\n", loMinuValue, loPlusValue, str_sensor, counter);
+
 }
