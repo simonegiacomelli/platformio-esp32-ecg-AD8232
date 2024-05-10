@@ -36,22 +36,26 @@ void loop() {
         lastRead = currentMillis;
         counter++;
 
-        float sensor = analogRead(SENSOR);
-        dtostrf(sensor, 4, 2, str_sensor);
 
         int loMinuValue = digitalRead(LEADSOFF_M_PIN);
         int loPlusValue = digitalRead(LEADSOFF_P_PIN);
+        if (loMinuValue == 1 || loPlusValue == 1)
+            return;
 
 
-        printf("all %d %d %s %ld %ld\n"
-               ">ecg:%s\n"
-               ">lo+:%d\n"
-               ">lo-:%d\n",
-               loMinuValue, loPlusValue, str_sensor, counter, skipped,
-               str_sensor,
-               loPlusValue,
-               loMinuValue);
-//        printf(">ecg:%s\n", str_sensor);
+        float sensor = analogRead(SENSOR);
+        dtostrf(sensor, 4, 2, str_sensor);
+
+
+//        printf("all %d %d %s %ld %ld\n"
+//               ">ecg:%s\n"
+//               ">lo+:%d\n"
+//               ">lo-:%d\n",
+//               loMinuValue, loPlusValue, str_sensor, counter, skipped,
+//               str_sensor,
+//               loPlusValue,
+//               loMinuValue);
+        printf(">ecg:%s\n", str_sensor);
 //        printf(">lo+:%d\n", loPlusValue);
 //        printf(">lo-:%d\n", loMinuValue);
     } else {
