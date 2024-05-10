@@ -11,23 +11,24 @@
 // #define LED_BUILTIN 2
 // #endif
 
+#define SENSOR A0
+
 void setup() {
     pinMode(LED_BUILTIN, OUTPUT);
+    pinMode(SENSOR, INPUT);
     Serial.begin(115200);
+
 }
 
+char str_sensor[10];
+
 void loop() {
-    // turn the LED on (HIGH is the voltage level)
-    digitalWrite(LED_BUILTIN, HIGH);
-
-    delay(1000);
-    // turn the LED off by making the voltage LOW
-    digitalWrite(LED_BUILTIN, LOW);
-
-    delay(1000);
     static long counter = 0;
     counter++;
 
-    Serial.print("ESP32 counter: ");
-    Serial.println(counter);
+    float sensor = analogRead(SENSOR);
+    dtostrf(sensor, 4, 2, str_sensor);
+
+
+    printf("%d %s\n", counter, str_sensor);
 }
